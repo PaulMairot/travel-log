@@ -1,0 +1,7 @@
+{
+  "name": "comem-travel-log-ionic-starter",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
