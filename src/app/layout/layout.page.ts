@@ -17,9 +17,10 @@ export class LayoutPage {
 
   constructor() {
     this.tabs = [
-      { title: 'New Trip', icon: 'add', path: 'create-trip' },
-      { title: 'Places Map', icon: 'map', path: 'places-map' },
-      { title: 'Trip List', icon: 'list', path: 'trip-list' },
+      { title: 'Home', icon: 'home', path: 'home' },
+      { title: 'Search', icon: 'search', path: 'search' },
+      { title: 'Map', icon: 'map', path: 'places-map' },
+      { title: 'User', icon: 'person', path: 'user' }
     ];
   }
 }

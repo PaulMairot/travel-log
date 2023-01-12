@@ -1,0 +1,10 @@
+
+<ion-content>
+  <h1>Recherche</h1>
+  <ion-searchbar [(ngModel)]="filterTerm" debounce="100" (ionChange)="searchChange($event)" placeholder="Rechercher un endroit"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngFor='let place of placesFiltered'>
+      <ion-label>{{place.name}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

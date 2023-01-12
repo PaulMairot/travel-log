@@ -1,15 +1,48 @@
 <ion-header>
-  <ion-toolbar>
+  <!-- <ion-toolbar>
     <ion-title>CreateTrip</ion-title>
-    <!-- Logout button -->
     <ion-buttons slot="end">
       <ion-button (click)="logOut()">
         <ion-icon name="log-out"></ion-icon>
       </ion-button>
+      
     </ion-buttons>
-  </ion-toolbar>
+  </ion-toolbar> -->
 </ion-header>
 
 <ion-content>
-  Let's create a trip
+  <ion-back-button defaultHref="home" icon="arrow-back" text=""></ion-back-button>
+  <h1>Créer un voyage</h1>
+
+  <form #createTripForm="ngForm"
+  (submit)="onSubmit(createTripForm)">
+  <ion-list>
+    <!-- Username input -->
+    <ion-item>
+      <ion-input placeholder="Nom" inputmode="text"
+        required="true"
+        name="name"
+        [(ngModel)]="tripRequest.title"></ion-input>
+    </ion-item>
+
+    <!-- Password input -->
+    <ion-item>
+      <ion-textarea placeholder="Description" inputmode="text"
+        required="true"
+        type="text"
+        name="description"
+        [(ngModel)]="tripRequest.description"></ion-textarea>
+    </ion-item>
+
+  <div class="ion-padding">
+    <!-- Submit button -->
+    <ion-button type="submit" expand="block">Créer</ion-button>
+  </div>
+
+  <!-- Error message displayed if the form failed -->
+  <ion-text color="danger"
+  *ngIf="formError">Username or password is invalid.</ion-text>
+</ion-list>
+</form>
+
 </ion-content>

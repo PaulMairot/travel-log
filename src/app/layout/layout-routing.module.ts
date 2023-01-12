@@ -11,7 +11,28 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'trip-list',
+        redirectTo: 'home',
+      },
+      {
+        path: 'home',
+        loadChildren: () =>
+          import('./home/home.module').then(
+            (m) => m.HomePageModule
+          ),
+      },
+      {
+        path: 'search',
+        loadChildren: () =>
+          import('./search/search.module').then(
+            (m) => m.SearchPageModule
+          ),
+      },
+      {
+        path: 'user',
+        loadChildren: () =>
+          import('./user/user.module').then(
+            (m) => m.UserPageModule
+          ),
       },
       {
         path: 'create-trip',
