@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CapacitorGoogleMaps } from '@capacitor/google-maps/dist/typings/implementation';
 import { Storage } from '@ionic/storage-angular';
 
 @Component({
@@ -9,5 +10,7 @@ import { Storage } from '@ionic/storage-angular';
 export class AppComponent {
   constructor(storage: Storage) {
     storage.create();
+
+    
   }
 }

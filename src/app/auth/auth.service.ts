@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
 import { from, Observable, ReplaySubject } from 'rxjs';
@@ -37,8 +37,18 @@ export class AuthService {
 
   logIn$(authRequest: AuthRequest): Observable<User> {
     const authUrl = `${environment.apiUrl}/auth`;
+
+    const headers = new HttpHeaders({
+      'Access-Control-Allow-Origin': 'http://localhost:8100',
+      'Access-Control-Allow-Methods': 'POST',
+      'Access-Control-Allow-Credentials': 'true'
+    });
+
+    const options = {
+      headers: headers
+    };
     
-    return this.http.post<AuthResponse>(authUrl, authRequest).pipe(
+    return this.http.post<AuthResponse>(authUrl, authRequest, options).pipe(
       // Delay the observable stream while persisting the authentication response.
       delayWhen((auth) => this.saveAuth$(auth)),
       map((auth) => {

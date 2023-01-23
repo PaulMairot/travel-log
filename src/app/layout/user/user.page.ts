@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Storage } from '@ionic/storage-angular';
 
 @Component({
   selector: 'app-user',
@@ -7,9 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserPage implements OnInit {
 
-  constructor() { }
+  public user;
+
+  constructor(private storage: Storage) { }
 
   ngOnInit() {
+    this.storage.get('auth').then((auth) => {
+      // Emit the loaded value into the observable stream.
+      this.user = auth.user;
+      console.log(this.user);
+      
+    });
   }
 
 }
