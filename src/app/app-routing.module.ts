@@ -17,6 +17,14 @@ const routes: Routes = [
   {
     path: 'modify-place',
     loadChildren: () => import('./modify-place/modify-place.module').then( m => m.ModifyPlacePageModule)
+  },
+  {
+    path: 'modify-trip',
+    loadChildren: () => import('./modify-trip/modify-trip.module').then( m => m.ModifyTripPageModule)
+  },
+  {
+    path: 'add-place',
+    loadChildren: () => import('./add-place/add-place.module').then( m => m.AddPlacePageModule)
   }
 ];
 

@@ -8,6 +8,8 @@ import { TripListPageRoutingModule } from './trip-list-routing.module';
 
 import { TripListPage } from './trip-list.page';
 
+import { TripCardComponent } from 'src/app/trip-card/trip-card.component';
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +17,9 @@ import { TripListPage } from './trip-list.page';
     IonicModule,
     TripListPageRoutingModule
   ],
-  declarations: [TripListPage]
+  declarations: [
+    TripListPage, 
+    TripCardComponent
+  ]
 })
 export class TripListPageModule {}

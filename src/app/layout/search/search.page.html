@@ -3,7 +3,17 @@
   <h1>Recherche</h1>
   <ion-searchbar [(ngModel)]="filterTerm" debounce="100" (ionChange)="searchChange($event)" placeholder="Rechercher un endroit"></ion-searchbar>
   <ion-list>
-    <ion-item *ngFor='let place of placesFiltered'>
+    <ion-list-header *ngIf="tripsFiltered?.length">
+      <ion-label>Voyages</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor='let trip of tripsFiltered' href="/modify-trip?id={{trip.id}}">
+      <ion-label>{{trip.title}}</ion-label>
+    </ion-item>
+
+    <ion-list-header *ngIf="placesFiltered?.length">
+      <ion-label>Lieux</ion-label>
+    </ion-list-header>
+    <ion-item *ngFor='let place of placesFiltered' href="/modify-place?id={{place.id}}">
       <ion-label>{{place.name}}</ion-label>
     </ion-item>
   </ion-list>

@@ -1,8 +1,11 @@
 <ion-content>
   <h1>Mon profil</h1>
-  <ion-list>
-    <ion-item>
-      {{user?.name}}
-    </ion-item>
-  </ion-list>
+  <ion-item>
+    {{user?.name}}
+  </ion-item>
+
+  <ion-button expand="block" (click)="logOut()">
+    Déconnexion
+    <ion-icon name="log-out"></ion-icon>
+  </ion-button>
 </ion-content>

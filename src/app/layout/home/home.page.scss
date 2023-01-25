@@ -53,6 +53,10 @@ app-trip-card {
     
 }
 
+app-trip-card:hover {
+    cursor: pointer;
+}
+
 span a {
     width: 30%;
 
@@ -64,4 +68,8 @@ span a {
     font-size: 15px;
 
     color: #FF8443;
+
+}
+span a:hover {
+    cursor: pointer;
 }

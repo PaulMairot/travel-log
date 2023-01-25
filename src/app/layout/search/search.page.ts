@@ -12,6 +12,10 @@ export class SearchPage implements OnInit {
 
   public places;
   public placesFiltered;
+
+  public trips;
+  public tripsFiltered;
+
   public filterTerm: String;
 
   constructor(private http: HttpClient) { }
@@ -21,11 +25,18 @@ export class SearchPage implements OnInit {
 
   ionViewWillEnter(): void {
     
-    // Make an HTTP request to retrieve the trips.
-    const url = `${environment.apiUrl}/places`;
+    // Make an HTTP request to retrieve the places.
+    let url = `${environment.apiUrl}/places`;
     this.http.get(url).subscribe((places) => {
       this.places = places
       console.log(`Places loaded`, this.places);
+    });
+
+    // Make an HTTP request to retrieve the trips.
+    url = `${environment.apiUrl}/trips`;
+    this.http.get(url).subscribe((trips) => {
+      this.trips = trips
+      console.log(`Trips loaded`, this.trips);
     });
   }
 
@@ -34,7 +45,7 @@ export class SearchPage implements OnInit {
     const query = event.target.value.toLowerCase();
 
     this.placesFiltered = this.places.filter((place) => place.name.toLowerCase().includes(query.toLowerCase()));
-    
+    this.tripsFiltered = this.trips.filter((trip) => trip.title.toLowerCase().includes(query.toLowerCase()));
   }
 
 }

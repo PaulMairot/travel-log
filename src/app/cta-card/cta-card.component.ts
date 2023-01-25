@@ -11,7 +11,7 @@ export class CtaCardComponent implements OnInit {
   constructor(private router: Router) { }
 
   navigateToPage(page) {
-    this.router.navigate(['/' + page])
+    this.router.navigateByUrl(`/${page}`)
   }
 
   ngOnInit() {}

@@ -4,8 +4,8 @@
   <h1>{{userLoggedName}}</h1>
   <app-cta-card [title]="'Créer un voyage'" [img]="'img-add-trip.jpg'" [toPage]="'create-trip'"></app-cta-card>
   <h2>Mes voyages</h2>
-  <span><a href="/places-map">Voir plus</a></span>
+  <span><a (click)="navigateToTripList()">Voir plus</a></span>
   <div id="cards-container">
-    <app-trip-card *ngFor='let trip of trips | slice:0:2' [title]="trip.title" [description]="trip.description"></app-trip-card>
+    <app-trip-card *ngFor='let trip of trips | slice:0:2' [title]="trip.title" [description]="trip.description" (click)="navigateToTrip(trip.id)"></app-trip-card>
   </div>
 </ion-content>

@@ -26,7 +26,7 @@ ion-icon {
   width: 18px;
 }
 
-ion-button {
+#modifyButton {
   font-family: Mulish !important;
   font-size: 20px;
   font-weight: 800;
@@ -41,5 +41,23 @@ ion-button {
 
   position: fixed;
   bottom: 45%;
+
+}
+
+#addButton {
+  font-family: Mulish !important;
+  font-size: 20px;
+  font-weight: 800;
+
+  width: 90%;
+
+  margin: auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  top: 15%;
 
 }

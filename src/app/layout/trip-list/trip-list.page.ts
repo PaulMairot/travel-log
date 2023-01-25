@@ -9,13 +9,16 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./trip-list.page.scss'],
 })
 export class TripListPage implements ViewWillEnter {
+
+  public trips;
+
   constructor(private http: HttpClient) {}
 
   ionViewWillEnter(): void {
     // Make an HTTP request to retrieve the trips.
     const url = `${environment.apiUrl}/trips`;
     this.http.get(url).subscribe((trips) => {
-      console.log(`Trips loaded`, trips);
+      this.trips = trips;
     });
   }
 }

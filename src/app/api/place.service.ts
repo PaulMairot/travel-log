@@ -16,6 +16,20 @@ export class PlaceService {
     this.#place$ = new ReplaySubject(1);
   }
 
+  addPlace$(place: PlaceRequest): void {
+    
+    const placeUrl = `${environment.apiUrl}/places`;
+    
+    this.http.post(placeUrl, place).subscribe(data => {
+      console.log(data['_body']);
+     }, error => {
+      console.log(error);
+    });
+
+    console.log("created place");
+    
+  }
+
   modifyPlace$(place: PlaceRequest, id: string): void {
     const placeUrl = `${environment.apiUrl}/places/${id}`;
     

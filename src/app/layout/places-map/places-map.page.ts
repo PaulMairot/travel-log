@@ -4,9 +4,11 @@ import { environment } from 'src/environments/environment';
 
 import { GoogleMap } from '@capacitor/google-maps';
 import { Geolocation } from '@capacitor/geolocation';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController, NavParams } from '@ionic/angular';
 import { PlaceModalComponent } from 'src/app/modals/place-modal/place-modal.component';
 import { timeout } from 'rxjs/operators';
+import { NavigationExtras, Router } from '@angular/router';
+import { AddPlacePage } from 'src/app/add-place/add-place.page';
 
 @Component({
   selector: 'app-places-map',
@@ -15,23 +17,52 @@ import { timeout } from 'rxjs/operators';
 })
 export class PlacesMapPage implements OnInit {
 
-  private places;
-  public trips;
-  public coordinates;
+  private places = undefined;
+  public trips = undefined;
+  public coordinates = undefined;
+
+  public map = undefined;
+
   public isModalOpen = false;
+  public isAddModalOpen = false;
 
-  public selectedPlace;
+  public userMarkerID = undefined
+  public userMarkerCoordinates = {
+    'latitude': undefined,
+    'longitude': undefined
+  }
+
+  public selectedPlace = undefined;
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router, public navCtrl: NavController) { }
 
   async locate() {
     const coordinates = await Geolocation.getCurrentPosition();
     this.coordinates = coordinates;
-    
   };
 
-  
+  public removeUserMarker() {
+    this.map.removeMarker(this.userMarkerID)
+  }
+
+  public navigateToAddPlace() {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        latitude: this.userMarkerCoordinates.latitude,
+        longitude: this.userMarkerCoordinates.longitude,
+      }
+  };
+
+    this.isAddModalOpen = false;
+
+    console.log(this.userMarkerCoordinates);
+
+    this.navCtrl.navigateForward(['add-place'], navigationExtras);
+    
+    //this.router.navigateByUrl('/add-place', navigationExtras);
+    // this.router.navigateByUrl('/add-place')
+  }
 
   ngOnInit() {
      
@@ -49,7 +80,7 @@ export class PlacesMapPage implements OnInit {
 
     this.locate().then(async ()=> {      
 
-      const map = await GoogleMap.create({
+      this.map = await GoogleMap.create({
         id: '9005095ea83b3294', // Unique identifier for this map instance
         element: mapRef, // reference to the capacitor-google-map element
         apiKey: apiKey, // Your Google Maps API Key
@@ -59,6 +90,7 @@ export class PlacesMapPage implements OnInit {
             lat: this.coordinates.coords.latitude,
             lng: this.coordinates.coords.longitude,
           },
+          disableDefaultUI: true,
           zoom: 12, // The initial zoom level to be rendered by the map
         },
       });
@@ -78,10 +110,10 @@ export class PlacesMapPage implements OnInit {
         })
       });
 
-      await map.addMarkers(markersPlaces);
+      await this.map.addMarkers(markersPlaces);
       
       // Move the map programmatically
-      await map.setCamera({
+      await this.map.setCamera({
         coordinate: {
           lat: 46.78124830585724,
           lng: 6.647304110643388
@@ -89,11 +121,31 @@ export class PlacesMapPage implements OnInit {
       });
 
       // Handle marker click
-      await map.setOnMarkerClickListener((event) => {
+      await this.map.setOnMarkerClickListener((event) => {
         console.log(event);
         this.selectedPlace = this.places.find(place => place.id === event.title);
         this.isModalOpen = true;
         
+      });
+
+      // Handle marker click
+      await this.map.setOnMapClickListener(async (event) => {
+        console.log(event);
+        const marker = {
+
+          tintColor: { r: 153, g: 128, b: 255, a: 100 },
+          coordinate: {
+            lat: event.latitude,
+            lng: event.longitude
+          }
+        };
+
+        this.userMarkerCoordinates.latitude = event.latitude;
+        this.userMarkerCoordinates.longitude = event.longitude;
+        
+
+        this.userMarkerID = await this.map.addMarker(marker)
+        this.isAddModalOpen = true;
       });
       
             

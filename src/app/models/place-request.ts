@@ -2,5 +2,9 @@ export type PlaceRequest = {
   name: string;
   description: string;
   tripId: string;
-  tripHref: string;
+  location: {
+    "type": string,
+    "coordinates": [ number, number ]
+  };
+  pictureUrl: string;
 };
