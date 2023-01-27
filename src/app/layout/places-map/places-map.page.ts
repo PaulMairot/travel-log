@@ -9,6 +9,8 @@ import { PlaceModalComponent } from 'src/app/modals/place-modal/place-modal.comp
 import { timeout } from 'rxjs/operators';
 import { NavigationExtras, Router } from '@angular/router';
 import { AddPlacePage } from 'src/app/add-place/add-place.page';
+import { Storage } from '@ionic/storage-angular';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-places-map',
@@ -32,10 +34,11 @@ export class PlacesMapPage implements OnInit {
     'longitude': undefined
   }
 
+  public userLogged: User;
   public selectedPlace = undefined;
 
 
-  constructor(private http: HttpClient, private router: Router, public navCtrl: NavController) { }
+  constructor(private http: HttpClient, private router: Router, public navCtrl: NavController, private storage: Storage) { }
 
   async locate() {
     const coordinates = await Geolocation.getCurrentPosition();
@@ -65,14 +68,23 @@ export class PlacesMapPage implements OnInit {
   }
 
   ngOnInit() {
-     
-    // Make an HTTP request to retrieve the places.
-    const url = `${environment.apiUrl}/places?include=trip`;
-    this.http.get(url).subscribe((places) => {
-      this.places = places
-      console.log(`Places loaded`, this.places);
+
+    this.storage.get('auth').then((auth) => {
+      // Emit the loaded value into the observable stream.
+      this.userLogged = auth.user;
+    }).then(() => {
+      // Make an HTTP request to retrieve the places.
+      const url = `${environment.apiUrl}/places?include=trip.user`;
+      this.http.get(url).subscribe((places) => {
+        this.places = places;
+        for (let i = 0; i < this.places.length; i++) {
+          if(this.places[i].trip.user.id != this.userLogged.id)
+            this.places.splice(i, 1);
+            i--;
+        }
+        console.log(`Places loaded`, places);
+      });
     });
-    
 
     const apiKey = environment.mapApiKey;
 

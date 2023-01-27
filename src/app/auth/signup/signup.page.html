@@ -1,0 +1,43 @@
+<ion-content>
+  <h1>Créer un compte</h1>
+
+  <form #signupForm="ngForm"
+    (submit)="onSubmit(signupForm)">
+    <ion-list>
+      <!-- Username input -->
+      <ion-item>
+        <ion-label position="floating">Nom d'utilisateur</ion-label>
+        <ion-input inputmode="text"
+          #username="ngModel"
+          required="true"
+          name="username"
+          [(ngModel)]="signupRequest.name"></ion-input>
+      </ion-item>
+
+
+      <!-- Password input -->
+      <ion-item>
+        <ion-label position="floating">Mot de passe</ion-label>
+        <ion-input inputmode="text"
+          #password="ngModel"
+          required="true"
+          type="password"
+          name="password"
+          [(ngModel)]="signupRequest.password"></ion-input>
+      </ion-item>
+    </ion-list>
+
+    
+
+    <div class="ion-padding">
+      <!-- Submit button -->
+      <ion-button type="submit"
+        expand="block"
+        [disabled]="signupForm.invalid">Créer le compte
+      </ion-button>
+
+    </div>
+
+    <a href="login">Se connecter</a>
+  </form>
+</ion-content>

@@ -14,7 +14,8 @@ import { Router } from '@angular/router';
 })
 export class HomePage implements OnInit {
   
-  public userLoggedName: String;
+  public userLogged: User;
+  public userLoggedName = String;
   public trips;
 
   public navigateToTrip(tripID) {
@@ -29,19 +30,21 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.storage.get('auth').then((auth) => {
       // Emit the loaded value into the observable stream.
+      this.userLogged = auth.user;
       this.userLoggedName = auth.user.name;
+    }).then(() => {
+      // Make an HTTP request to retrieve the trips.
+      const url = `${environment.apiUrl}/trips?user=${this.userLogged.id}`;
+      this.http.get(url).subscribe((trips) => {
+        this.trips = trips
+        console.log(`Trips loaded`, this.trips);
+      });
     });
   }
 
 
   ionViewWillEnter(): void {
     
-    // Make an HTTP request to retrieve the trips.
-    const url = `${environment.apiUrl}/trips`;
-    this.http.get(url).subscribe((trips) => {
-      this.trips = trips
-      console.log(`Trips loaded`, this.trips);
-    });
   }
 
   public navigateToTripList() {

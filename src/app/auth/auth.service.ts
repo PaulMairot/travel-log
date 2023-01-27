@@ -6,6 +6,7 @@ import { delayWhen, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { AuthRequest } from '../models/auth-request';
 import { AuthResponse } from '../models/auth-response';
+import { SignupRequest } from '../models/signup-request';
 import { User } from '../models/user';
 
 /**
@@ -57,6 +58,12 @@ export class AuthService {
         return auth.user;
       })
     );
+  }
+
+  signup$(signupRequest: SignupRequest): Observable<User> {
+    const url = `${environment.apiUrl}/users`;
+    return this.http.post<User>(url, signupRequest);
+      
   }
 
   logOut(): void {
