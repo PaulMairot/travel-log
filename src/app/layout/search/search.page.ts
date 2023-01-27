@@ -38,9 +38,10 @@ export class SearchPage implements OnInit {
       this.http.get(placeUrl).subscribe((places) => {
         this.places = places;
         for (let i = 0; i < this.places.length; i++) {
-          if(this.places[i].trip.user.id != this.userLogged.id)
+          if(this.places[i].trip.user.id != this.userLogged.id) {
             this.places.splice(i, 1);
             i--;
+          }
         }
         console.log(`Places loaded`, places);
       });

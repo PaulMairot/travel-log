@@ -27,6 +27,7 @@ export class PlacesMapPage implements OnInit {
 
   public isModalOpen = false;
   public isAddModalOpen = false;
+  public mapLoaded = false;
 
   public userMarkerID = undefined
   public userMarkerCoordinates = {
@@ -78,9 +79,10 @@ export class PlacesMapPage implements OnInit {
       this.http.get(url).subscribe((places) => {
         this.places = places;
         for (let i = 0; i < this.places.length; i++) {
-          if(this.places[i].trip.user.id != this.userLogged.id)
+          if(this.places[i].trip.user.id != this.userLogged.id) {
             this.places.splice(i, 1);
             i--;
+          }
         }
         console.log(`Places loaded`, places);
       });
@@ -106,6 +108,11 @@ export class PlacesMapPage implements OnInit {
           zoom: 12, // The initial zoom level to be rendered by the map
         },
       });
+
+      console.log(this.map);
+      
+
+      this.mapLoaded = true;
 
       let markersPlaces = [];
 

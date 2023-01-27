@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage-angular';
-import { ViewWillEnter } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { from, Observable } from 'rxjs';
 import { User } from 'src/app/models/user';
@@ -28,6 +27,11 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
+    
+  }
+
+
+  ionViewDidEnter(): void {
     this.storage.get('auth').then((auth) => {
       // Emit the loaded value into the observable stream.
       this.userLogged = auth.user;
@@ -40,11 +44,7 @@ export class HomePage implements OnInit {
         console.log(`Trips loaded`, this.trips);
       });
     });
-  }
 
-
-  ionViewWillEnter(): void {
-    
   }
 
   public navigateToTripList() {

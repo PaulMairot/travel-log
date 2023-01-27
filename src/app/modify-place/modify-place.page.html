@@ -12,6 +12,7 @@
       <ion-input placeholder="{{placeSelected.name}}" inputmode="text"
         required="true"
         name="name"
+        (ionChange)="changeInput($event.target)"
         [(ngModel)]="placeRequest.name"></ion-input>
     </ion-item>
 
@@ -21,6 +22,7 @@
         required="true"
         type="text"
         name="description"
+        (ionChange)="changeInput($event.target)"
         [(ngModel)]="placeRequest.description"></ion-textarea>
     </ion-item>
 
@@ -42,7 +44,7 @@
 
   <div class="ion-padding">
     <!-- Submit button -->
-    <ion-button type="submit" expand="block">Modifier</ion-button>
+    <ion-button *ngIf="showValidateButton" type="submit" expand="block">Modifier</ion-button>
     <ion-button color="danger" (click)='deletePlace()' expand="block">Supprimer</ion-button>
   </div>
 
@@ -52,5 +54,27 @@
   *ngIf="formError">Username or password is invalid.</ion-text> -->
 </ion-list>
 </form>
+
+<ion-list *ngIf="!isDataAvailable">
+  <ion-item>
+    <ion-label>
+      <h3>
+        <ion-skeleton-text [animated]="true" style="width: 100%; height: 30px;"></ion-skeleton-text>
+      </h3>
+      <p>
+        <ion-skeleton-text [animated]="true" style="width: 100%; height: 130px;"></ion-skeleton-text>
+      </p>
+      <h3>
+        <ion-skeleton-text [animated]="true" style="width: 100%; height: 30px;"></ion-skeleton-text>
+      </h3>
+      <p>
+        <ion-skeleton-text [animated]="true" style="width: 100%; height: 190px;"></ion-skeleton-text>
+      </p>
+      <p>
+        <ion-skeleton-text [animated]="true" style="width: 100%; height: 50px; margin-top: 25px;"></ion-skeleton-text>
+      </p>
+    </ion-label>
+  </ion-item>
+</ion-list>
 
 </ion-content>

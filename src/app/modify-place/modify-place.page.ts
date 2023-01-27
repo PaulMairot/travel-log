@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 import { environment } from 'src/environments/environment';
 import { PlaceService } from '../api/place.service';
 import { PlaceRequest } from '../models/place-request';
@@ -18,6 +19,7 @@ export class ModifyPlacePage implements OnInit {
   public placeID;
   public placeSelected;
   public isDataAvailable = false;
+  public showValidateButton = false;
 
   public tripsList;
   public picture: QimgImage;
@@ -26,7 +28,15 @@ export class ModifyPlacePage implements OnInit {
   placeRequest: PlaceRequest;
 
 
-  constructor(private route: ActivatedRoute, private router: Router, private http: HttpClient, private placeService: PlaceService,private cd: ChangeDetectorRef, private pictureService: PictureService) { 
+  constructor(
+    private route: ActivatedRoute, 
+    private router: Router, 
+    private http: HttpClient, 
+    private placeService: PlaceService,
+    private cd: ChangeDetectorRef, 
+    private pictureService: PictureService,
+    private alertController: AlertController
+  ) { 
     
       this.route.queryParams.subscribe(params => {
       this.placeID = params.id
@@ -59,6 +69,15 @@ export class ModifyPlacePage implements OnInit {
     
   }
 
+  public changeInput(target) {
+    if (this.placeRequest[target.name] != this.placeSelected[target.name]) {
+      
+      this.showValidateButton = true;
+    } else {
+      this.showValidateButton = false;
+    }
+  }
+
   onSubmit(form: NgForm) {
     // Do not do anything if the form is invalid.
     if (form.invalid) {
@@ -73,14 +92,37 @@ export class ModifyPlacePage implements OnInit {
 
   }
 
-  deletePlace() {
-    this.placeService.deletePlace$(this.placeID);
+  async deletePlace() {
+    const alert = await this.alertController.create({
+      header: 'Supprimer le lieu ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel'
+        },
+        {
+          text: 'Supprimer',
+          role: 'confirm'
+        },
+      ],
+    });
+
+    await alert.present();
+
+    await alert.onDidDismiss().then((alert) => {
+      if(alert.role == "confirm") {
+        this.placeService.deletePlace$(this.placeID);
+      }
+      
+    });
   }
 
   takePicture() {
     this.pictureService.takeAndUploadPicture().subscribe(picture => {
       this.placeRequest.pictureUrl = picture.url;
     });
+
+    this.showValidateButton = true;
   }
 
   ngOnInit() {

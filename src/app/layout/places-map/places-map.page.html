@@ -1,20 +1,26 @@
 
 <ion-content>
+
+  <ion-spinner *ngIf="mapLoaded" name="crescent"></ion-spinner>
+  
   <capacitor-google-map id="map"></capacitor-google-map>
 
   <ion-modal
     (willDismiss)="isModalOpen=false"
     [isOpen]="isModalOpen"
     [initialBreakpoint]="0.6"
-    [breakpoints]="[0.2, 0.6]"
+    [breakpoints]="[0.18, 0.6]"
     handleBehavior="cycle"
   >
     <ng-template>
       <ion-content class="ion-padding">
         <div class="ion-margin-top">
           <h1 id="place-title">{{selectedPlace.name}}</h1>
-          <ion-icon name="map-outline"></ion-icon>
-          <span>{{selectedPlace.trip.title}}</span>
+          <div>
+            
+            <span><ion-icon name="map-outline"></ion-icon>{{selectedPlace.trip.title}}</span>
+          </div>
+          <img src="{{selectedPlace.pictureUrl}}">
           <ion-button id="modifyButton" shape="round" href="/modify-place?id={{selectedPlace.id}}">Modifier</ion-button>
         </div>
       </ion-content>

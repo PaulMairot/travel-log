@@ -52,7 +52,7 @@ export class ModifyTripPage implements OnInit {
 
   async deleteTrip() {
       const alert = await this.alertController.create({
-        header: 'Supprimer le voyage',
+        header: 'Supprimer le voyage ?',
         buttons: [
           {
             text: 'Annuler',
