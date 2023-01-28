@@ -54,7 +54,7 @@ export class AddPlacePage implements OnInit {
 
   ngOnInit() {
     
-
+  // Get list of trips
   this.http.get(`${environment.apiUrl}/trips`).subscribe((trips) => {
     this.tripsList = trips;
   });
