@@ -12,19 +12,24 @@
   <h2>{{user?.tripsCount}}</h2>
 </ion-card-content>
 <ion-button (click)="this.router.navigateByUrl('/trip-list')">Voir</ion-button>
-
 </ion-card>
 </ion-col>
-<ion-col>
-<ion-card>
-  <ion-card-header>
-    <ion-card-title>Lieux</ion-card-title>
-  </ion-card-header>
-  <ion-card-content>
-    <h2>{{numberPlaces}}</h2>
-  </ion-card-content>
-  <ion-button (click)="this.router.navigateByUrl('/places-map')">Voir</ion-button>
-  </ion-card>
-</ion-col>
-</ion-row>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>Lieux</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+          <h2>{{numberPlaces}}</h2>
+          </ion-card-content>
+          <ion-button (click)="this.router.navigateByUrl('/places-map')">Voir</ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
   </ion-grid>
+
+  <ion-button id="logout" expand="block" (click)="logOut()">
+    Déconnexion
+    <ion-icon name="log-out"></ion-icon>
+  </ion-button>
+</ion-content>
